@@ -88,7 +88,20 @@ The application follows a modern full-stack architecture with clear separation b
 
 Preferred communication style: Simple, everyday language.
 
+## Recent Changes
+
+Recent Changes:
+- June 28, 2025: Enhanced UI with luxury legal-tech design improvements
+  - Added Lora serif font for headings to create professional legal feel
+  - Enhanced Risk Score Dial with contextual messaging and improved visual design
+  - Added privacy assurance messaging to file uploader
+  - Implemented staggered animations for results display
+  - Enhanced typography hierarchy with font-legal class
+  - Added hover states and transition effects for cards
+  - Improved recommendations section with bullet styling
+  - Added colorblind-friendly icons for risk levels
+
 ## Changelog
 
 Changelog:
-- June 28, 2025. Initial setup
+- June 28, 2025. Initial setup and luxury UI enhancements

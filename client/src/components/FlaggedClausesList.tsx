@@ -40,8 +40,8 @@ export default function FlaggedClausesList() {
   ];
 
   return (
-    <Card className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-      <h3 className="text-lg font-semibold navy mb-6 flex items-center">
+    <Card className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-shadow duration-300">
+      <h3 className="text-xl font-legal font-semibold text-slate-800 mb-6 flex items-center">
         <Flag className="mr-2 text-red-500 w-5 h-5" />
         Red-Flagged Clauses
       </h3>
@@ -72,11 +72,23 @@ export default function FlaggedClausesList() {
           <Lightbulb className="text-sky mr-2 w-5 h-5" />
           <h4 className="font-semibold text-sky">Recommendations</h4>
         </div>
-        <ul className="text-sm text-blue-700 space-y-1">
-          <li>• Request to limit non-compete clause to direct competitors only</li>
-          <li>• Negotiate a liability cap equal to the contract value</li>
-          <li>• Clarify IP assignment scope to exclude pre-existing work</li>
-          <li>• Consider adding a severability clause to preserve the rest of the contract</li>
+        <ul className="text-sm text-blue-700 space-y-2">
+          <li className="flex items-start">
+            <span className="text-sky mr-2">•</span>
+            Request to limit non-compete clause to direct competitors only
+          </li>
+          <li className="flex items-start">
+            <span className="text-sky mr-2">•</span>
+            Negotiate a liability cap equal to the contract value
+          </li>
+          <li className="flex items-start">
+            <span className="text-sky mr-2">•</span>
+            Clarify IP assignment scope to exclude pre-existing work
+          </li>
+          <li className="flex items-start">
+            <span className="text-sky mr-2">•</span>
+            Consider adding a severability clause to preserve the rest of the contract
+          </li>
         </ul>
       </div>
     </Card>

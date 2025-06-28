@@ -50,6 +50,11 @@ export default function FileUploader({ onFileUpload }: FileUploaderProps) {
         <h3 className="text-xl font-semibold navy mb-2">Drop your contract here</h3>
         <p className="text-gray-600 mb-4">Or click to browse files</p>
         <p className="text-sm text-gray-500">Supports PDF and DOCX files up to 10MB</p>
+        <div className="mt-3 flex items-center justify-center">
+          <span className="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+            🔒 Your file stays 100% private. It's never stored or shared.
+          </span>
+        </div>
         <input 
           ref={fileInputRef}
           type="file" 

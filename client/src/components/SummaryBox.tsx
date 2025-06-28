@@ -3,8 +3,8 @@ import { Card } from "@/components/ui/card";
 
 export default function SummaryBox() {
   return (
-    <Card className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-      <h3 className="text-lg font-semibold navy mb-4 flex items-center">
+    <Card className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-shadow duration-300">
+      <h3 className="text-xl font-legal font-semibold text-slate-800 mb-4 flex items-center">
         <FileText className="mr-2 text-sky w-5 h-5" />
         Contract Summary
       </h3>

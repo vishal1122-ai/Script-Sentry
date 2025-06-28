@@ -70,7 +70,7 @@ export default function Home() {
           <div className="animate-fade-in">
             <div className="mb-8">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold navy">Contract Analysis Results</h2>
+                <h2 className="text-2xl font-legal font-bold text-slate-800">Contract Analysis Results</h2>
                 <div className="flex space-x-3">
                   <Button 
                     variant="outline" 
@@ -91,15 +91,15 @@ export default function Home() {
               </div>
 
               <div className="grid lg:grid-cols-3 gap-8">
-                <div className="lg:col-span-1">
+                <div className="lg:col-span-1 animate-stagger-1">
                   <RiskScoreDial score={7} />
                 </div>
-                <div className="lg:col-span-2">
+                <div className="lg:col-span-2 animate-stagger-2">
                   <SummaryBox />
                 </div>
               </div>
 
-              <div className="mt-8">
+              <div className="mt-8 animate-stagger-3">
                 <FlaggedClausesList />
               </div>
             </div>
