@@ -7,7 +7,7 @@ import SummaryBox from "@/components/SummaryBox";
 import FlaggedClausesList from "@/components/FlaggedClausesList";
 import RiskScoreDial from "@/components/RiskScoreDial";
 import { Button } from "@/components/ui/button";
-import { Download, RotateCcw } from "lucide-react";
+import { Download, RotateCcw, FileDown } from "lucide-react";
 
 export default function Home() {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -45,9 +45,14 @@ export default function Home() {
     console.log("Exporting PDF...");
   };
 
+  const handleDownloadReport = () => {
+    // Mock download full report functionality
+    console.log("Downloading full report...");
+  };
+
   return (
     <div className="min-h-screen bg-light-bg">
-      <Header />
+      <Header hasResults={hasResults} onStartOver={handleStartOver} />
       
       <main className="max-w-5xl mx-auto px-6 py-12">
         {!hasResults && (
@@ -82,7 +87,7 @@ export default function Home() {
                   </Button>
                   <Button 
                     onClick={handleExportPDF}
-                    className="bg-sky text-white hover:bg-blue-600"
+                    className="bg-sky text-white hover:bg-blue-600 border border-sky-200"
                   >
                     <Download className="w-4 h-4 mr-2" />
                     Export PDF
@@ -101,6 +106,20 @@ export default function Home() {
 
               <div className="mt-8 animate-stagger-3">
                 <FlaggedClausesList />
+              </div>
+
+              {/* Download Full Report Button */}
+              <div className="mt-8 text-center">
+                <Button 
+                  onClick={handleDownloadReport}
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 text-lg"
+                >
+                  <FileDown className="w-5 h-5 mr-2" />
+                  📄 Download Full Report
+                </Button>
+                <p className="text-sm text-gray-500 mt-2">
+                  Get a comprehensive PDF with detailed analysis and recommendations
+                </p>
               </div>
             </div>
           </div>

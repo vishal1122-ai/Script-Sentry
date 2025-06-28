@@ -21,11 +21,11 @@ export default function RiskScoreDial({ score }: RiskScoreDialProps) {
       messageColor: "text-green-600"
     };
     if (score <= 6) return { 
-      level: "Medium Risk", 
+      level: "Moderate Risk", 
       color: "bg-orange-100 text-orange-800", 
       stroke: "#F59E0B",
       icon: AlertCircle,
-      message: "⚠️ Medium Risk: Review flagged clauses carefully.",
+      message: "⚠️ Moderate Risk: Review flagged clauses carefully.",
       messageColor: "text-orange-600"
     };
     return { 
