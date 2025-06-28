@@ -1,0 +1,88 @@
+You're an expert React and Tailwind UI developer.
+
+I am building a web application called **ScriptSentry** – an AI-powered contract analyzer for freelancers and creators. It allows users to upload a contract (PDF or DOCX), then shows:
+
+1. A plain-English summary of the contract
+2. A list of red-flagged clauses
+3. A risk score (1–10) with a visual indicator
+
+🎯 Your task: Build a clean, responsive **UI only** in **Next.js 14 and Tailwind CSS**, with a luxury, trustworthy legal-tech feel (think Linear, Stripe Docs, Juro).
+
+---
+
+## ✨ Design Guidelines
+
+- Layout: Centered, single-page app
+- Font: Use `Inter` or a classy sans-serif (via Google Fonts)
+- Color theme: 
+  - Background: `#f9f9f9` or white
+  - Primary: Navy (`#1E293B`), Accent: Sky Blue (`#0284C7`)
+  - Risk Indicator: Green, Orange, Red
+- Animations: Use subtle transitions for loading/spinner and panel fades
+- Spacing: Generous padding, legal-SaaS aesthetic
+
+---
+
+## 🧩 Components and Structure
+
+**Folder Structure:**
+/components
+
+FileUploader.jsx
+
+SummaryBox.jsx
+
+FlaggedClausesList.jsx
+
+RiskScoreDial.jsx
+
+Header.jsx
+
+Footer.jsx
+
+LoadingOverlay.jsx
+/pages
+
+index.jsx
+/public
+
+logo.svg
+
+sample.pdf
+/styles
+
+globals.css
+
+yaml
+Copy code
+
+**Main Page Layout (index.jsx):**
+- Header with logo and tagline: “AI-Powered Contract Safety for Freelancers & Creators”
+- FileUploader component (accepts PDF, DOCX) with drag-and-drop + button
+- Sample file option (e.g., "Try with Sample NDA")
+- Conditional loading state
+- When parsed (mock for now), show:
+  - `<SummaryBox />` with dummy summary text
+  - `<FlaggedClausesList />` with 2–3 sample issues
+  - `<RiskScoreDial />` with a visual meter or dial (score: 7/10)
+- Buttons: "Start Over", "Export PDF"
+
+---
+
+## 🛠 Functionality (mocked for now)
+- Simulate parsing delay with a loading spinner
+- Use Tailwind transitions
+- Mock the output content (no backend or API calls yet)
+
+---
+
+## ✅ Expectations
+- Fully styled, clean and elegant UI
+- Responsive design (mobile + desktop)
+- All components modular and reusable
+- No real file parsing or API logic (you can stub it)
+- Bonus: Include placeholder text for all sections
+
+---
+
+Let me know if you need anything else — but focus just on the **UI** for now.
