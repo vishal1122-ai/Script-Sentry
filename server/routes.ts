@@ -1,5 +1,6 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
+<<<<<<< HEAD
 // @ts-ignore
 import multer from "multer";
 // @ts-ignore
@@ -65,5 +66,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+=======
+import { storage } from "./storage";
+
+export async function registerRoutes(app: Express): Promise<Server> {
+  // put application routes here
+  // prefix all routes with /api
+
+  // use storage to perform CRUD operations on the storage interface
+  // e.g. storage.insertUser(user) or storage.getUserByUsername(username)
+
+  const httpServer = createServer(app);
+
+>>>>>>> 0fff94551276f7c8ebb8637eacc2231c455f40fd
   return httpServer;
 }
