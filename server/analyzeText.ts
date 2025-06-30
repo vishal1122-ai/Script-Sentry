@@ -11,7 +11,7 @@ export async function analyzeContractText(text: string): Promise<string> {
       {
         role: "system",
         content:
-          "You are a contract analysis assistant for freelancers. Your job is to review contracts and extract helpful insights. Always include a risk score from 1 to 10, highlight red flags in asterisks, and offer brief explanations.",
+          "You are a contract analysis assistant helping freelancers, creators, consultants, and small business owners understand legal agreements. Your job is to extract meaningful insights and highlight any areas that may pose risks. Be concise, avoid legal jargon, and tailor your language to a non-technical audience."",
       },
       {
         role: "user",
@@ -20,7 +20,7 @@ export async function analyzeContractText(text: string): Promise<string> {
 2. Payment terms
 3. Termination policy
 4. Any red flags (highlighted in **bold**)
-5. Overall summary
+5. Overall summary (in simple, plain English)
 6. Risk Score (1–10)`,
       },
     ],
