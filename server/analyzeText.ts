@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import OpenAI from "openai";
 
 const openai = new OpenAI({
@@ -6,12 +9,12 @@ const openai = new OpenAI({
 
 export async function analyzeContractText(text: string): Promise<string> {
   const response = await openai.chat.completions.create({
-    model: "gpt-4", // or "gpt-3.5-turbo" if you prefer
+    model: "gpt-3.5-turbo", // or "gpt-3.5-turbo" if you prefer
     messages: [
       {
         role: "system",
         content:
-          "You are a contract analysis assistant helping freelancers, creators, consultants, and small business owners understand legal agreements. Your job is to extract meaningful insights and highlight any areas that may pose risks. Be concise, avoid legal jargon, and tailor your language to a non-technical audience."",
+          "You are a contract analysis assistant helping freelancers, creators, consultants, and small business owners understand legal agreements. Your job is to extract meaningful insights and highlight any areas that may pose risks. Be concise, avoid legal jargon, and tailor your language to a non-technical audience.",
       },
       {
         role: "user",
