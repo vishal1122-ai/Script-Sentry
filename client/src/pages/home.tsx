@@ -41,12 +41,12 @@ export default function Home() {
       }
 
       const result: string = data.analysis;
-
+      console.log(result);
       // Parse LLM output
       const summaryMatch = result.match(
         /Overall summary.*?\n([\s\S]*?)\n?\d{1,2}/i
       );
-      const riskMatch = result.match(/Risk Score.*?(\d+(\.\d+)?)/);
+      const riskMatch = result.match(/Risk\s*Score\s*[:\-]?\s*(\d+(\.\d+)?)/i);
       const flagged = [...result.matchAll(/\*\*(.*?)\*\*: (.*?)\n/g)].map(
         (match) => ({
           title: match[1],
@@ -133,6 +133,7 @@ export default function Home() {
 
               <div className="grid lg:grid-cols-3 gap-8">
                 <div className="lg:col-span-1 animate-stagger-1">
+                  console.log(riskScore)
                   <RiskScoreDial score={riskScore} />
                 </div>
                 <div className="lg:col-span-2 animate-stagger-2">
