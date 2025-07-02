@@ -1,35 +1,44 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import OpenAI from "openai";
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 export async function analyzeContractText(text: string): Promise<string> {
-  const response = await openai.chat.completions.create({
-    model: "gpt-3.5-turbo", // or "gpt-3.5-turbo" if you prefer
-    messages: [
-      {
-        role: "system",
-        content:
-          "You are a contract analysis assistant helping freelancers, creators, consultants, and small business owners understand legal agreements. Your job is to extract meaningful insights and highlight any areas that may pose risks. Be concise, avoid legal jargon, and tailor your language to a non-technical audience.",
+  const response = await fetch(
+    "https://openrouter.ai/api/v1/chat/completions",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
+        "HTTP-Referer": "http://localhost:5000", // Required by OpenRouter
+        "X-Title": "ScriptSentry",
       },
-      {
-        role: "user",
-        content: `Here is a contract:\n\n${text}\n\nPlease provide the following:\n
-1. Key clauses
-2. Payment terms
-3. Termination policy
-4. Any red flags (highlighted in **bold**)
-5. Overall summary (in simple, plain English)
-6. Risk Score (1–10)`,
-      },
-    ],
-    temperature: 0.5,
-    max_tokens: 1000,
-  });
+      body: JSON.stringify({
+        model: "mistralai/mistral-small",
+        messages: [
+          {
+            role: "system",
+            content: "Whats the capital of France.",
+          },
+          //           {
+          //             role: "user",
+          //             content: `Here is a contract:\n\n${text}\n\nPlease provide the following:\n
+          // 1. Key clauses
+          // 2. Payment terms
+          // 3. Termination policy
+          // 4. Any red flags (highlighted in **bold**)
+          // 5. Overall summary (in simple, plain English)
+          // 6. Risk Score (1–10)`,
+          //           },
+        ],
+      }),
+    }
+  );
 
-  return response.choices[0]?.message?.content || "No analysis result found.";
+  const result = await response.json();
+
+  if (!response.ok || !result.choices || !result.choices[0]?.message?.content) {
+    throw new Error(`OpenRouter Error: ${JSON.stringify(result)}`);
+  }
+
+  return result.choices[0].message.content;
 }
