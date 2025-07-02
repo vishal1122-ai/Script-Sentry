@@ -17,18 +17,19 @@ export async function analyzeContractText(text: string): Promise<string> {
         messages: [
           {
             role: "system",
-            content: "Whats the capital of France.",
+            content:
+              "You are a contract analysis assistant helping freelancers, creators, consultants, and small business owners understand legal agreements. Your job is to extract meaningful insights and highlight any areas that may pose risks. Be concise, avoid legal jargon, and tailor your language to a non-technical audience.",
           },
-          //           {
-          //             role: "user",
-          //             content: `Here is a contract:\n\n${text}\n\nPlease provide the following:\n
-          // 1. Key clauses
-          // 2. Payment terms
-          // 3. Termination policy
-          // 4. Any red flags (highlighted in **bold**)
-          // 5. Overall summary (in simple, plain English)
-          // 6. Risk Score (1–10)`,
-          //           },
+          {
+            role: "user",
+            content: `Here is a contract:\n\n${text}\n\nPlease provide the following:\n
+1. Key clauses
+2. Payment terms
+3. Termination policy
+4. Any red flags (highlighted in **bold**)
+5. Overall summary (in simple, plain English)
+6. Risk Score (1–10)`,
+          },
         ],
       }),
     }
