@@ -1,5 +1,4 @@
 import { useState } from "react";
-import axios from "axios";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FileUploader from "@/components/FileUploader";
@@ -7,6 +6,7 @@ import LoadingOverlay from "@/components/LoadingOverlay";
 import SummaryBox from "@/components/SummaryBox";
 import FlaggedClausesList from "@/components/FlaggedClausesList";
 import RiskScoreDial from "@/components/RiskScoreDial";
+import RecommendationsList from "@/components/RecommendationsList";
 import { Button } from "@/components/ui/button";
 import { Download, RotateCcw, FileDown } from "lucide-react";
 
@@ -14,9 +14,9 @@ export default function Home() {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [hasResults, setHasResults] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [analysisText, setAnalysisText] = useState(""); // raw response
   const [summaryText, setSummaryText] = useState("");
   const [riskScore, setRiskScore] = useState(0);
+  const [recommendations, setRecommendations] = useState<string[]>([]);
   const [flaggedClauses, setFlaggedClauses] = useState<
     { title: string; clause: string; risk: string; explanation: string }[]
   >([]);
@@ -26,7 +26,6 @@ export default function Home() {
     setProgress(0);
 
     try {
-      // Upload to backend
       const formData = new FormData();
       formData.append("document", file);
 
@@ -35,30 +34,24 @@ export default function Home() {
         body: formData,
       });
 
-      const data = await response.json();
-      if (!response.ok || !data.analysis) {
-        throw new Error(data.error || "Analysis failed");
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result.error || "Analysis failed");
       }
 
-      const result: string = data.analysis;
-      console.log(result);
-      // Parse LLM output
-      const summaryMatch = result.match(
-        /Overall summary.*?\n([\s\S]*?)\n?\d{1,2}/i
-      );
-      const riskMatch = result.match(/Risk\s*Score\s*[:\-]?\s*(\d+(\.\d+)?)/i);
-      const flagged = [...result.matchAll(/\*\*(.*?)\*\*: (.*?)\n/g)].map(
-        (match) => ({
-          title: match[1],
-          clause: match[2],
-          risk: "High Risk", // You can improve this with smarter parsing later
-          explanation: "LLM flagged this clause as potentially risky.",
-        })
-      );
+      // 🧠 Use structured fields directly
+      setSummaryText(result.summary || "No summary found.");
+      setRiskScore(result.riskScore || 0);
 
-      setSummaryText(summaryMatch?.[1]?.trim() || "No summary found.");
-      setRiskScore(Number(riskMatch?.[1] || 0));
+      const flagged = result.redFlags.map((item: any) => ({
+        title: item.clause,
+        clause: item.text,
+        risk: "High Risk", // Static for now; can be made dynamic
+        explanation: item.reason,
+      }));
+
       setFlaggedClauses(flagged);
+      setRecommendations(result.recommendations || []);
       setHasResults(true);
     } catch (error) {
       console.error("Error analyzing file:", error);
@@ -74,12 +67,10 @@ export default function Home() {
   };
 
   const handleExportPDF = () => {
-    // Mock export functionality
     console.log("Exporting PDF...");
   };
 
   const handleDownloadReport = () => {
-    // Mock download full report functionality
     console.log("Downloading full report...");
   };
 
@@ -133,7 +124,6 @@ export default function Home() {
 
               <div className="grid lg:grid-cols-3 gap-8">
                 <div className="lg:col-span-1 animate-stagger-1">
-                  console.log(riskScore)
                   <RiskScoreDial score={riskScore} />
                 </div>
                 <div className="lg:col-span-2 animate-stagger-2">
@@ -145,7 +135,10 @@ export default function Home() {
                 <FlaggedClausesList clauses={flaggedClauses} />
               </div>
 
-              {/* Download Full Report Button */}
+              <div className="mt-8 animate-stagger-4">
+                <RecommendationsList recommendations={recommendations} />
+              </div>
+
               <div className="mt-8 text-center">
                 <Button
                   onClick={handleDownloadReport}
@@ -165,7 +158,6 @@ export default function Home() {
       </main>
 
       <Footer />
-
       {isAnalyzing && <LoadingOverlay progress={progress} />}
     </div>
   );

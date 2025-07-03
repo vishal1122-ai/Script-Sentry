@@ -61,7 +61,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // 🔍 Analyze text using OpenAI
       const aiResult = await analyzeContractText(text);
       console.log("🧠 LLM Output:", aiResult);
-      return res.json({ analysis: aiResult });
+      return res.json(aiResult);
     } catch (err) {
       console.error("File processing failed:", err);
       return res
