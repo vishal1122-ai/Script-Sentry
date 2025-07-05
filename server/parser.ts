@@ -6,43 +6,37 @@ interface AnalyzedResult {
 }
 
 export function analyzeText(result: string): AnalyzedResult {
-  // Extract first paragraph or block before "Red-Flagged", "###", or numbered section
-  const summaryMatch = result.match(
-    /^([\s\S]*?)(?=\n#+\s*Red-Flagged|\n\d+\.\s*Red-Flagged|\nRed-Flagged|Risk Score|General Recommendations)/i
-  );
-  console.log("🟩 Summary Match:", summaryMatch?.[1]);
-  const scoreMatch = result.match(/Risk Score[:\s]*([\d.]+)/i);
-  const recommendationsMatch = result.match(
-    /General Recommendations:\s*([\s\S]*)/i
-  );
+  const riskScoreMatch = result.match(/1\. risk score:\s*(\d+)/i);
+  const summaryMatch = result.match(/2\. summary:\s*([\s\S]*?)\s*3\./i);
+  const redFlagsRaw = result.match(/3\. red flag:\s*([\s\S]*?)\s*4\./i);
+  const recommendationsMatch = result.match(/4\. recommendation:\s*([\s\S]*)/i);
 
-  const redFlagRegex =
-    /^(.*?)[\n\r]+"(.*?)"[\n\r]+Why this is risky:\s*(.*?)\s*(?=\n\S|\Z)/gm;
   const redFlags: { clause: string; text: string; reason: string }[] = [];
-
-  let match;
-  while ((match = redFlagRegex.exec(result)) !== null) {
-    redFlags.push({
-      clause: match[1].trim(),
-      text: match[2].trim(),
-      reason: match[3].trim(),
-    });
+  if (redFlagsRaw?.[1]) {
+    const redFlagRegex =
+      /^(.*?)\s+"(.*?)"\s+Why this is risky:\s*(.*?)(?=\n\S|\Z)/gms;
+    let match;
+    while ((match = redFlagRegex.exec(redFlagsRaw[1])) !== null) {
+      redFlags.push({
+        clause: match[1].trim(),
+        text: match[2].trim(),
+        reason: match[3].trim(),
+      });
+    }
   }
 
   const recommendations =
     recommendationsMatch?.[1]
-      ?.split(/•\s+/)
+      ?.split(/\[RECOMMEND\]\s*/i)
       .map((rec) => rec.trim())
       .filter((rec) => rec.length > 0) || [];
 
-  console.log("🟩 Summary Match:", summaryMatch?.[1]);
-  console.log("🟩 Score Match:", scoreMatch?.[1]);
-  console.log("🟩 Recommendations Raw:", recommendationsMatch?.[1]);
-  console.log("🟩 Red Flags:", redFlags);
+  // console.log("🧠 Raw Recommendations Block:", recommendationsMatch?.[1]);
+  // console.log("✅ Extracted Recommendations:", recommendations);
 
   return {
-    summary: summaryMatch?.[1].trim() || "",
-    riskScore: parseFloat(scoreMatch?.[1] || "0"),
+    summary: summaryMatch?.[1]?.trim() || "No summary found.",
+    riskScore: parseFloat(riskScoreMatch?.[1] || "0"),
     redFlags,
     recommendations,
   };
