@@ -81,7 +81,7 @@ export default function FlaggedClausesList({
         })}
       </div>
 
-      {/* Optional default recommendation block */}
+      {/* Optional default recommendation block
       {clauses.length > 0 && (
         <div className="mt-6 p-4 bg-blue-50 rounded-lg">
           <div className="flex items-center mb-2">
@@ -103,7 +103,7 @@ export default function FlaggedClausesList({
             </li>
           </ul>
         </div>
-      )}
+      )} */}
     </Card>
   );
 }

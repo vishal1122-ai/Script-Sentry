@@ -6,9 +6,11 @@ interface AnalyzedResult {
 }
 
 export function analyzeText(result: string): AnalyzedResult {
+  // Extract first paragraph or block before "Red-Flagged", "###", or numbered section
   const summaryMatch = result.match(
-    /Contract Summary:\s*([\s\S]*?)\n(?:Red-Flagged|Risk Score)/i
+    /^([\s\S]*?)(?=\n#+\s*Red-Flagged|\n\d+\.\s*Red-Flagged|\nRed-Flagged|Risk Score|General Recommendations)/i
   );
+  console.log("🟩 Summary Match:", summaryMatch?.[1]);
   const scoreMatch = result.match(/Risk Score[:\s]*([\d.]+)/i);
   const recommendationsMatch = result.match(
     /General Recommendations:\s*([\s\S]*)/i
@@ -32,6 +34,11 @@ export function analyzeText(result: string): AnalyzedResult {
       ?.split(/•\s+/)
       .map((rec) => rec.trim())
       .filter((rec) => rec.length > 0) || [];
+
+  console.log("🟩 Summary Match:", summaryMatch?.[1]);
+  console.log("🟩 Score Match:", scoreMatch?.[1]);
+  console.log("🟩 Recommendations Raw:", recommendationsMatch?.[1]);
+  console.log("🟩 Red Flags:", redFlags);
 
   return {
     summary: summaryMatch?.[1].trim() || "",

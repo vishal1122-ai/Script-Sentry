@@ -44,14 +44,19 @@ export default function Home() {
       setRiskScore(result.riskScore || 0);
 
       const flagged = result.redFlags.map((item: any) => ({
-        title: item.clause,
+        title: item.clause.replace(/\*\*/g, "").trim(),
         clause: item.text,
         risk: "High Risk", // Static for now; can be made dynamic
         explanation: item.reason,
       }));
 
       setFlaggedClauses(flagged);
-      setRecommendations(result.recommendations || []);
+      setRecommendations(
+        (result.recommendations || []).map((rec: string) =>
+          rec.replace(/^Recommendation\s*\d*:\s*/i, "").trim()
+        )
+      );
+
       setHasResults(true);
     } catch (error) {
       console.error("Error analyzing file:", error);

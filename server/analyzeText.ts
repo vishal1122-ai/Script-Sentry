@@ -24,11 +24,11 @@ export async function analyzeContractText(text: string) {
           },
           {
             role: "user",
-            content: `Here is a contract:\n\n${text}\n\nPlease provide the following in this exact order and structure:\n
+            content: `Here is a contract:\n\n${text}\n\nPlease analyze the following contract. Your response must use the EXACT section titles below, without Markdown, bullets, or formatting characters like **, ##, or -.\n
 1. Risk Score: [number from 1–10]
 
 2. Contract Summary:
-[1-2 paragraph summary]
+[Write a 2-paragraph plain-English summary of the contract]
 
 3. Red-Flagged Clauses:
 [Use this format for each clause]
@@ -37,9 +37,8 @@ export async function analyzeContractText(text: string) {
 Why this is risky: [Reason in plain English]
 
 4. General Recommendations:
-• Recommendation 1
-• Recommendation 2
-• Recommendation 3`,
+• List as many recommendations as needed, each starting with a bullet point.
+`,
           },
         ],
       }),
